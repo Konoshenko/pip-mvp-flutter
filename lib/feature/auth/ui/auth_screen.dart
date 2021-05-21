@@ -15,7 +15,9 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) =>
-      Scaffold(body: LayoutBuilder(builder: (context, constraints) {
+      Scaffold(
+        resizeToAvoidBottomInset: true,
+          body: LayoutBuilder(builder: (context, constraints) {
         return constraints.maxWidth < 800
             ? const AuthPage()
             : const Center(child: SizedBox(width: 400, child: AuthPage()));

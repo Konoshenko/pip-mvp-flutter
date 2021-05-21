@@ -21,7 +21,7 @@ class _AuthPageState extends State<AuthPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthCubit,AuthState>(
+    return BlocBuilder<AuthCubit, AuthState>(
       bloc: context.read<AuthCubit>(),
       builder: (context, state) {
         return Padding(
@@ -40,7 +40,7 @@ class _AuthPageState extends State<AuthPage> {
                         height: 200,
                       ),
                       SizedBox(
-                        height: 90,
+                        height: 80,
                         child: TextFormField(
                           autofocus: true,
                           onFieldSubmitted: (_) =>
@@ -66,14 +66,16 @@ class _AuthPageState extends State<AuthPage> {
                         ),
                       ),
                       SizedBox(
-                        height: 90,
+                        height: 80,
                         child: TextFormField(
                           onFieldSubmitted: (_) {
                             FocusScope.of(context).unfocus();
                             _onClickSignIn();
                           },
                           style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w400,),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                          ),
                           obscureText: true,
                           focusNode: _focusPassword,
                           obscuringCharacter: '*',
@@ -95,7 +97,7 @@ class _AuthPageState extends State<AuthPage> {
                 ButtonPip(
                   margin: const EdgeInsets.symmetric(
                     horizontal: 0,
-                    vertical: 32,
+                    vertical: 15,
                   ),
                   title: 'Sign in'.toUpperCase(),
                   enable: _btnDisable

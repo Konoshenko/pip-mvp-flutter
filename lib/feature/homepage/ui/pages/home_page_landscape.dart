@@ -53,6 +53,7 @@ class __HomePageLandscapeState extends State<HomePageLandscape> {
               ],
             ),
             child: Column(
+              mainAxisSize: MainAxisSize.max,
               children: [
                 ContactView(
                   contact: widget.list[_selectedIndex],
