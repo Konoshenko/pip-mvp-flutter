@@ -26,8 +26,8 @@ class _ContactDetailsScreenState extends State<ContactDetailsScreen> {
 
 class ContactView extends StatelessWidget {
   const ContactView({
-    Key? key,
     required this.contact,
+    Key? key,
   }) : super(key: key);
 
   final ContactV1 contact;
@@ -36,23 +36,31 @@ class ContactView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(height: 30),
           CircleAvatar(
             minRadius: 60,
             child: Text(
               contact.firstName.characters.first,
-              style: TextStyle(fontSize: 40),
+              style: const TextStyle(fontSize: 40),
             ),
           ),
           const SizedBox(height: 30),
           ItemContactInfo(
-              name: 'Name',
-              info: '${contact.firstName} ${contact.lastName} ',
-              icon: Icons.person),
-          ItemContactInfo(name: 'Phone', info: contact.phone, icon: Icons.phone),
-          ItemContactInfo(name: 'Email', info: contact.email, icon: Icons.email),
+            name: 'Name',
+            info: '${contact.firstName} ${contact.lastName} ',
+            icon: Icons.person,
+          ),
+          ItemContactInfo(
+            name: 'Phone',
+            info: contact.phone,
+            icon: Icons.phone,
+          ),
+          ItemContactInfo(
+            name: 'Email',
+            info: contact.email,
+            icon: Icons.email,
+          ),
         ],
       ),
     );

@@ -6,48 +6,45 @@ import 'package:pip_mvp_flutter/feature/homepage/repository/contact_repository.d
 import 'package:pip_mvp_flutter/feature/homepage/ui/pages/home_page_landscape.dart';
 import 'package:pip_mvp_flutter/feature/homepage/ui/pages/home_page_portrait.dart';
 
-class MyHomePage extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   static const String routName = '/home_screen';
 
-  MyHomePage({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter Pip Sample'),
+        title: const Text('Flutter Pip Sample'),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 8.0),
             child: InkWell(
               onTap: () => Navigator.pushNamed(context, ProfileScreen.routName),
-              child: CircleAvatar(
+              child: const CircleAvatar(
                 child: Icon(Icons.people_outline_outlined),
               ),
             ),
-          )
+          ),
         ],
       ),
       body: BlocBuilder<ContactListCubit, ContactListState>(
-          bloc: ContactListCubit(ContactRepositoryMock()),
-          builder: (contact, state) {
-            if (state is ContactListData) {
-              return LayoutBuilder(
-                builder: (context, constraints) {
+        bloc: ContactListCubit(ContactRepositoryMock()),
+        builder: (contact, state) {
+          return state is ContactListData
+              ? LayoutBuilder(builder: (context, constraints) {
                   return constraints.maxWidth < 800
                       ? HomePagePortrait(state.listContact)
                       : HomePageLandscape(state.listContact);
-                },
-              );
-            } else {
-              return Center(child: CircularProgressIndicator());
-            }
-          }),
+                })
+              : const Center(child: CircularProgressIndicator());
+        },
+      ),
     );
   }
 }

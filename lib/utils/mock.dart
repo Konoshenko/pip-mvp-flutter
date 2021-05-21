@@ -2,6 +2,7 @@ import 'package:pip_mvp_flutter/feature/homepage/model/contact.dart';
 
 List<ContactV1> mockContactList = dataMock.map((e) {
   final fields = e.split(',');
+
   return ContactV1(
     id: fields[0],
     firstName: fields[1],
@@ -111,5 +112,5 @@ List<String> dataMock = [
   '97,Alix,Hilling,ahilling2o@ed.gov,504-938-3505',
   '98,Jeremy,Rootham,jrootham2p@squidoo.com,389-491-5582',
   '99,Rosemonde,Lewnden,rlewnden2q@wp.com,997-385-0816',
-  '100,Robert,Iianon,riianon2r@paginegialle.it,265-963-4671'
+  '100,Robert,Iianon,riianon2r@paginegialle.it,265-963-4671',
 ];

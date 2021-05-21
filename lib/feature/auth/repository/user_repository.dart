@@ -12,21 +12,21 @@ class UserRepository extends IUserRepository {
   Future<bool> login(String login, String password) async {
     await prefs!.setBool(SharedKey.spKeyIsLoggedIn, true);
     await prefs!.setString(SharedKey.spKeyName, login);
+
     return isLoggedIn();
   }
 
   @override
   Future<bool> isLoggedIn() async {
-    if (prefs == null) {
-      return false;
-    } else {
-      return prefs!.containsKey(SharedKey.spKeyIsLoggedIn);
-    }
+    return prefs == null
+        ? false
+        : prefs!.containsKey(SharedKey.spKeyIsLoggedIn);
   }
 
   @override
   Future<UserV1> getUser() async {
     final name = prefs!.getString(SharedKey.spKeyName) ?? '';
+
     return UserV1(email: name);
   }
 

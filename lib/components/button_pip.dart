@@ -38,7 +38,7 @@ class ButtonPip extends StatelessWidget {
           onPressed: enable == ButtonPipState.enable
               ? onClick
               : enable == ButtonPipState.loading
-                  ? () {}
+                  ? (){}
                   : null,
           child: enable == ButtonPipState.loading
               ? const CircularProgressIndicator(

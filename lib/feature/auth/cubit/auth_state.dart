@@ -10,7 +10,7 @@ class AuthIsLoggedIn extends AuthState {
   @override
   List<Object> get props => [userV1];
 
-  AuthIsLoggedIn(this.userV1);
+  const AuthIsLoggedIn(this.userV1);
 }
 
 class AuthIsLoggedOut extends AuthState {
@@ -27,7 +27,7 @@ class AuthLoading extends AuthState {
 class AuthError extends AuthState {
   final String error;
 
-  AuthError(this.error);
+  const AuthError(this.error);
 
   @override
   List<Object> get props => [error];

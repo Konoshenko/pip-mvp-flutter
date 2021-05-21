@@ -6,11 +6,11 @@ import 'package:pip_mvp_flutter/feature/homepage/repository/contact_repository_i
 part 'contact_list_state.dart';
 
 class ContactListCubit extends Cubit<ContactListState> {
-  ContactListCubit(this._contactRepository) : super(ContactListData([])) {
+  ContactListCubit(this._contactRepository) : super(const ContactListData([])) {
     fetchContacts();
   }
 
-  IContactRepository _contactRepository;
+  final IContactRepository _contactRepository;
 
   Future<void> fetchContacts() async {
     try {

@@ -20,12 +20,12 @@ class __HomePageLandscapeState extends State<HomePageLandscape> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-         width: 400,
+          width: 400,
           child: ListView.builder(
             itemCount: widget.list.length,
             itemBuilder: (context, index) {
               return ListTile(
-                selected: index==_selectedIndex,
+                selected: index == _selectedIndex,
                 onTap: () {
                   setState(() {
                     _selectedIndex = index;
@@ -41,22 +41,26 @@ class __HomePageLandscapeState extends State<HomePageLandscape> {
           ),
         ),
         Expanded(
-          flex: 1,
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
               boxShadow: <BoxShadow>[
                 BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 15.0,
-                    offset: Offset(0.0, 0.75))
+                  color: Colors.black12,
+                  blurRadius: 15.0,
+                  offset: Offset(0.0, 0.75),
+                ),
               ],
             ),
-            child: ContactView(
-              contact: widget.list[_selectedIndex],
+            child: Column(
+              children: [
+                ContactView(
+                  contact: widget.list[_selectedIndex],
+                ),
+              ],
             ),
           ),
-        )
+        ),
       ],
     );
   }

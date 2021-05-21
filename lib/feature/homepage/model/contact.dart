@@ -6,9 +6,10 @@ class ContactV1 {
   String email;
 
   ContactV1({
-    this.id = '',
     required this.firstName,
     required this.lastName,
+    this.id = '',
+
     this.phone = '',
     this.email = '',
   });

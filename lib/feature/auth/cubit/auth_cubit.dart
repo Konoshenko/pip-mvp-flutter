@@ -28,7 +28,7 @@ class AuthCubit extends Cubit<AuthState> implements IAuth {
   Future<void> login(String email, String password) async {
     try {
       emit(AuthLoading());
-      await Future.delayed(Duration(milliseconds: 1000));
+      await Future<void>.delayed(const Duration(milliseconds: 1000));
       final isLoggedIn = await userRepository.login(email, password);
       if (isLoggedIn) {
         final user = await userRepository.getUser();
@@ -44,16 +44,16 @@ class AuthCubit extends Cubit<AuthState> implements IAuth {
   }
 
   @override
-  logout() async {
+  Future<void> logout() async {
     await userRepository.logout();
     emit(AuthIsLoggedOut());
   }
 }
 
 abstract class IAuth {
-  login(String email, String password);
+  Future<void> login(String email, String password);
 
-  logout();
+  Future<void> logout();
 
-  launch();
+  Future<void>  launch();
 }

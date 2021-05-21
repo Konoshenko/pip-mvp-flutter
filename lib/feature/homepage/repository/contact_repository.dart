@@ -7,6 +7,6 @@ class ContactRepositoryMock extends IContactRepository {
 
   @override
   Future<List<ContactV1>> getContact() {
-    return Future.delayed(Duration(seconds: 2), () => mockContactList);
+    return Future.delayed(const Duration(seconds: 1), () => mockContactList);
   }
 }

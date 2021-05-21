@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pip_mvp_flutter/res/text_style.dart';
@@ -32,13 +30,18 @@ class ItemContactInfo extends StatelessWidget {
                     name,
                     style: textRegular14Grey,
                   ),
-                  Text(info,
-                      style: textRegular18),
+                  Text(
+                    info,
+                    style: textRegular18,
+                  ),
                 ],
               ),
             ),
             const SizedBox(width: 20),
-            Icon(icon,color: Theme.of(context).primaryColor,),
+            Icon(
+              icon,
+              color: Theme.of(context).primaryColor,
+            ),
             const SizedBox(width: 20),
           ],
         ),

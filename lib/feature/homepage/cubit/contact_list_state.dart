@@ -7,7 +7,7 @@ abstract class ContactListState extends Equatable {
 class ContactListData extends ContactListState {
   final List<ContactV1> listContact;
 
-  ContactListData(this.listContact);
+  const ContactListData(this.listContact);
   @override
   List<Object> get props => [];
 }
@@ -15,7 +15,7 @@ class ContactListData extends ContactListState {
 class ContactListError extends ContactListState {
   final String error;
 
-  ContactListError(this.error);
+  const ContactListError(this.error);
 
   @override
   List<Object> get props => [error];

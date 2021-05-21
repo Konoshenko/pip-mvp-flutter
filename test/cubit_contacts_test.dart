@@ -11,29 +11,32 @@ import 'test_contacts_cubit.mocks.dart';
 @GenerateMocks([IContactRepository])
 void main() {
   final contactRepo = MockIContactRepository();
-  setUpAll(() {});
 
   group('ContactCubit', () {
-    blocTest(
+    blocTest<ContactListCubit, ContactListState>(
       'Get contact list without errors',
       build: () {
         when(contactRepo.getContact())
             .thenAnswer((_) => Future.value(mockContactList));
+
         return ContactListCubit(contactRepo);
       },
-      act: (ContactListCubit cubit) => cubit.fetchContacts(),
+      act: (cubit) => cubit.fetchContacts(),
       expect: () => [ContactListData(mockContactList)],
     );
 
-    blocTest(
+    blocTest<ContactListCubit, ContactListState>(
       'Getting contact list with unknown error',
       build: () {
         when(contactRepo.getContact()).thenThrow(Exception());
+
         return ContactListCubit(contactRepo);
       },
-      act: (ContactListCubit cubit) => cubit.fetchContacts(),
-      expect: () =>
-          [ContactListLoading(), ContactListError(Exception().toString())],
+      act: (cubit) => cubit.fetchContacts(),
+      expect: () => [
+        ContactListLoading(),
+        ContactListError(Exception().toString()),
+      ],
     );
   });
 }

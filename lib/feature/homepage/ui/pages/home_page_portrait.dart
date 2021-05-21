@@ -12,7 +12,6 @@ class HomePagePortrait extends StatefulWidget {
 }
 
 class __HomePagePortraitState extends State<HomePagePortrait> {
-
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -21,12 +20,13 @@ class __HomePagePortraitState extends State<HomePagePortrait> {
         return ListTile(
           onTap: () {
             Navigator.pushNamed(
-                context, ContactDetailsScreen.routName,
-                arguments: widget.list[index]);
+              context,
+              ContactDetailsScreen.routName,
+              arguments: widget.list[index],
+            );
           },
           leading: CircleAvatar(
-            child: Text(widget.list[index].firstName
-                .characters.first),
+            child: Text(widget.list[index].firstName.characters.first),
           ),
           title: Text(widget.list[index].lastName),
           subtitle: Text(widget.list[index].phone),

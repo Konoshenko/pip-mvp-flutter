@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,87 +21,96 @@ class _AuthPageState extends State<AuthPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder(
-        bloc: context.read<AuthCubit>(),
-        builder: (context, AuthState state) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 20),
-                  Expanded(
-                    child: SvgPicture.asset(
-                      'assets/icon/activity_outline.svg',
-                      color: Theme.of(context).accentColor,
-                      height: double.infinity,
-                    ),
+    return BlocBuilder<AuthCubit,AuthState>(
+      bloc: context.read<AuthCubit>(),
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icon/ic_pip.svg',
+                        height: 200,
+                      ),
+                      SizedBox(
+                        height: 90,
+                        child: TextFormField(
+                          autofocus: true,
+                          onFieldSubmitted: (_) =>
+                              _focusPassword.requestFocus(),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          keyboardType: TextInputType.emailAddress,
+                          controller: _emailController,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: Validator.validateEmail,
+                          onChanged: (value) {
+                            setState(() {
+                              _btnDisable = _isFormEmpty();
+                            });
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Email',
+                            errorText:
+                                (state is AuthError) ? state.error : null,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 90,
+                        child: TextFormField(
+                          onFieldSubmitted: (_) {
+                            FocusScope.of(context).unfocus();
+                            _onClickSignIn();
+                          },
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w400,),
+                          obscureText: true,
+                          focusNode: _focusPassword,
+                          obscuringCharacter: '*',
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: Validator.validatePassword,
+                          onChanged: (value) {
+                            setState(() {
+                              _btnDisable = _isFormEmpty();
+                            });
+                          },
+                          controller: _passwordController,
+                          decoration:
+                              const InputDecoration(labelText: 'Password'),
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                    height: 80,
-                    child: TextFormField(
-                      autofocus: true,
-                      onFieldSubmitted: (_) => _focusPassword.requestFocus(),
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w400),
-                      keyboardType: TextInputType.emailAddress,
-                      controller: _emailController,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (value) {
-                        return Validator.validateEmail(value);
-                      },
-                      onChanged: (value) {
-                        setState(() {
-                          _btnDisable = _isFormEmpty();
-                        });
-                      },
-                      decoration: InputDecoration(
-                          labelText: 'Email',
-                          errorText: (state is AuthError) ? state.error : null),
-                    ),
+                ),
+                ButtonPip(
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 0,
+                    vertical: 32,
                   ),
-                  SizedBox(
-                    height: 70,
-                    child: TextFormField(
-                      onFieldSubmitted: (_) {
-                        FocusScope.of(context).unfocus();
-                        _onClickSignIn();
-                      },
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w400),
-                      obscureText: true,
-                      focusNode: _focusPassword,
-                      obscuringCharacter: '*',
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (value) => Validator.validatePassword(value),
-                      onChanged: (value) {
-                        setState(() {
-                          _btnDisable = _isFormEmpty();
-                        });
-                      },
-                      controller: _passwordController,
-                      decoration: const InputDecoration(labelText: 'Password'),
-                    ),
-                  ),
-                  Spacer(),
-                  ButtonPip(
-                    margin:
-                    const EdgeInsets.symmetric(horizontal: 0, vertical: 32),
-                    title: 'Sign in',
-                    enable: _btnDisable
-                        ? ButtonPipState.disable
-                        : state is AuthLoading
-                        ? ButtonPipState.loading
-                        : ButtonPipState.enable,
-                    onClick: _onClickSignIn,
-                  ),
-                ],
-              ),
+                  title: 'Sign in'.toUpperCase(),
+                  enable: _btnDisable
+                      ? ButtonPipState.disable
+                      : state is AuthLoading
+                          ? ButtonPipState.loading
+                          : ButtonPipState.enable,
+                  onClick: _onClickSignIn,
+                ),
+              ],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -114,7 +122,7 @@ class _AuthPageState extends State<AuthPage> {
 
   Future<void> _onClickSignIn() async {
     if (_formKey.currentState!.validate()) {
-      context
+      await context
           .read<AuthCubit>()
           .login(_emailController.text, _passwordController.text);
     }

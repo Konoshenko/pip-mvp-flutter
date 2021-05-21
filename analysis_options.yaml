@@ -1,0 +1,6 @@
+include: package:surf_lint_rules/analysis_options.yaml
+analyzer:
+  exclude: [ build/**, macos/**,ios/**, test/** ]
+linter:
+  rules:
+    -avoid_catches_without_on_clauses:false

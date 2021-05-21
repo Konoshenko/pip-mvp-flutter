@@ -16,13 +16,12 @@ dependencies:
   flutter_svg: ^0.22.0
   http: ^0.13.1
   shared_preferences: ^2.0.4
-  uuid: ^3.0.2
+  surf_lint_rules: any
 
 dev_dependencies:
   bloc_test: ^8.0.0
-  mockito: ^5.0.3
   build_runner: ^1.12.2
-  dart_code_metrics: ^3.2.3
+  mockito: ^5.0.3
   flutter_test:
     sdk: flutter
 

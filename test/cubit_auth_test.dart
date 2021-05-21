@@ -14,67 +14,75 @@ import 'test_auth_cubit.mocks.dart';
 void main() {
   final authRepo = MockUserRepository();
 
-  setUpAll(() {});
-
   group('AuthCubit', () {
     final UserV1 user = UserV1(id: 'test', email: 'test');
 
-    blocTest(
+    blocTest<AuthCubit, AuthState>(
       'Authorization without error',
       build: () {
         when(authRepo.isLoggedIn()).thenAnswer((_) => Future.value(true));
         when(authRepo.login(any, any)).thenAnswer((_) => Future.value(true));
         when(authRepo.getUser()).thenAnswer((_) => Future.value(user));
+
         return AuthCubit(authRepo);
       },
-      act: (AuthCubit cubit) => cubit.login('test', 'test'),
+      act: (cubit) => cubit.login('test', 'test'),
       expect: () => [AuthLoading(), AuthIsLoggedIn(user)],
     );
 
-    blocTest(
+    blocTest<AuthCubit, AuthState>(
       'Fail login',
       build: () {
         when(authRepo.isLoggedIn()).thenAnswer((_) => Future.value(false));
         when(authRepo.login(any, any)).thenAnswer((_) => Future.value(false));
         when(authRepo.getUser()).thenAnswer((_) => Future.value(user));
+
         return AuthCubit(authRepo);
       },
-      act: (AuthCubit cubit) => cubit.login('test', 'test'),
+      act: (cubit) => cubit.login('test', 'test'),
       expect: () => [AuthLoading(), AuthIsLoggedOut()],
     );
 
-    blocTest(
+    blocTest<AuthCubit, AuthState>(
       'Unknown error during login',
       build: () {
         when(authRepo.isLoggedIn()).thenAnswer((_) => Future.value(false));
         when(authRepo.login(any, any)).thenThrow(Exception());
         when(authRepo.getUser()).thenThrow(Exception());
+
         return AuthCubit(authRepo);
       },
-      act: (AuthCubit cubit) => cubit.login('test', 'test'),
-      expect: () => [AuthLoading(), AuthIsLoggedOut(),AuthError(Exception().toString())],
+      act: (cubit) => cubit.login('test', 'test'),
+      expect: () =>
+          [AuthLoading(), AuthIsLoggedOut(), AuthError(Exception().toString())],
     );
 
-    blocTest(
+    blocTest<AuthCubit, AuthState>(
       'Http exception during login',
       build: () {
         when(authRepo.isLoggedIn()).thenAnswer((_) => Future.value(false));
-        when(authRepo.login(any, any)).thenThrow(HttpException('test'));
-        when(authRepo.getUser()).thenThrow(HttpException('test'));
+        when(authRepo.login(any, any)).thenThrow(const HttpException('test'));
+        when(authRepo.getUser()).thenThrow(const HttpException('test'));
+
         return AuthCubit(authRepo);
       },
-      act: (AuthCubit cubit) => cubit.login('test', 'test'),
-      expect: () => [AuthLoading(), AuthIsLoggedOut(),AuthError(HttpException('test').toString())],
+      act: (cubit) => cubit.login('test', 'test'),
+      expect: () => [
+        AuthLoading(),
+        AuthIsLoggedOut(),
+        AuthError(const HttpException('test').toString()),
+      ],
     );
 
     blocTest<AuthCubit, AuthState>(
       'Log out without error',
       build: () {
         when(authRepo.isLoggedIn()).thenAnswer((_) => Future.value(false));
+
         return AuthCubit(authRepo);
       },
       seed: () => AuthIsLoggedIn(user),
-      act: (AuthCubit cubit) => cubit.logout(),
+      act: (cubit) => cubit.logout(),
       expect: () => [AuthIsLoggedOut()],
     );
   });
